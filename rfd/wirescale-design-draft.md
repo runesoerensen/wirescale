@@ -4,6 +4,42 @@ This document is a design proposal for Wirescale, a system that allow users acce
 
 The system is comprised of a [CLI](#wirescale-cli), a [public Auth0 integration](#auth0-integration), an [API](#wirescale-api) and a [WireGuard "server" peer](#wireguard-server-peer).
 
+```mermaid
+sequenceDiagram
+    Participant CLI as User/CLI
+
+    CLI->>+Auth0: Open browser: https://foo.us.auth0.com/authorize
+    Auth0-->>-CLI: authorization_token (audience: webscale API)
+
+    CLI->>+Auth0: POST https://foo.us.auth0.com/oauth/token
+    Auth0-->>-CLI: access_token
+
+    CLI->>CLI: Generate Wireguard keypair
+    CLI->>+Wirescale API: POST /wireguard_peers (upload `pubkey`
+
+    Wirescale API-->>+WireGuard Server: Get WireGuard peer configuration
+    WireGuard Server-->>-Wirescale API: Return WireGuard configuration
+
+    Wirescale API-->Wirescale API: Assign available IP address on WireGuard network (e.g. `10.8.0.2`)
+
+    Wirescale API->>+WireGuard Server: Create peer (user's `pubkey` + user WireGuard IP)
+    WireGuard Server-->>-Wirescale API: Peer created
+    Wirescale API-->>-CLI: Return information to connect to WireGuard Server <br /> (e.g. server's pubkey, user's assigned IP, server's public IP/endpoint)
+
+    activate CLI
+    critical Establish connection between User and Wireguard Server
+        CLI->>CLI: Configure local WireGuard interface
+        CLI-->WireGuard Server: Connection established!
+    end
+    deactivate CLI
+
+    loop
+        CLI-->>+WireGuard Server: GET http://10.8.0.1 (server's WireGuard IP address)<br /> (WireGuard server is running nginx and listening only on it's WireGuard peer IP address)
+        WireGuard Server-->>-CLI: Respond to WireGuard peer (10.8.0.2): "Welcome to nginx!"
+    end
+```
+
+
 ## Wirescale CLI
 
 The Wirescale CLI lets users sign in to the Wirescale service like this:
