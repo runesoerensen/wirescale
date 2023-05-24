@@ -15,7 +15,7 @@ sequenceDiagram
     Auth0-->>-CLI: access_token
 
     CLI->>CLI: Generate Wireguard keypair
-    CLI->>+Wirescale API: POST /wireguard_peers (upload `pubkey`
+    CLI->>+Wirescale API: POST /wireguard_peers (upload `pubkey`)
 
     Wirescale API-->>+WireGuard Server: Get WireGuard peer configuration
     WireGuard Server-->>-Wirescale API: Return WireGuard configuration
