@@ -73,7 +73,7 @@ The Wirescale API is an HTTP service that can access and configure [the WireGuar
 The API is publicly accessible on the hostname specified as the [Auth0 API/resource server identifier](#auth0-integration). The API only serves requests over HTTPS, and can authorize Wirescale users and verify the integrity of access tokens (JWT signed using RS256) without knowledge of any secrets.
 
 ### Creating a WireGuard client peer
-The API has a single REST endpoint (e.g. `POST /wireguard_peers`) that requires a `public_key` parameter and will:
+The API has a single HTTP endpoint (e.g. `POST /wireguard_peers`) that requires a `public_key` parameter and will:
 
 * Access the [WireGuard server](#wireguard-server-peer) and retrieve the server's public WireGuard key, port, network and current peer configuration.
 * Assign an unused IP in the WireGuard network address range for the new client peer connection.
