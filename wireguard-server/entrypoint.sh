@@ -27,5 +27,15 @@ nginx_ip_address=$(getent hosts nginx-server | awk '{ print $1 }')
 iptables -t nat -A PREROUTING -i wg-wirescale -p tcp --dport 80 -j DNAT --to-destination $nginx_ip_address:80
 iptables -t nat -A POSTROUTING -o eth0 -p tcp --dport 80 -d $nginx_ip_address -j MASQUERADE
 
+# Hack to make sure the WireGuard peer config is saved when container is stopped
+cleanup() {
+    echo "Container stopping, performing cleanup..."
+    wg-quick save wg-wirescale
+}
+
+trap 'cleanup' SIGTERM
+
 # Only listen on Docker IP (e.g. don't allow access to wireguard network peers)
-wgrest --static-auth-token "$WGREST_STATIC_AUTH_TOKEN" --listen "$(hostname -i):8000"
+wgrest --static-auth-token "$WGREST_STATIC_AUTH_TOKEN" --listen "$(hostname -i):8000" &
+
+wait $!
