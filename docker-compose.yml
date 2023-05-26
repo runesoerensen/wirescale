@@ -2,3 +2,11 @@ version: '3'
 services:
   nginx-server:
     image: nginx
+  wireguard-server:
+    build: ./wireguard-server
+    depends_on:
+      - nginx-server
+    ports:
+      - 51820:51820/udp
+    cap_add:
+      - NET_ADMIN
