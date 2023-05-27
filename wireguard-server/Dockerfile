@@ -15,7 +15,4 @@ RUN /install-wgrest.sh
 # Expose the WireGuard port
 EXPOSE 51820/udp
 
-# Set a simple static authentication token shared with the Wirescale API
-ENV WGREST_STATIC_AUTH_TOKEN=secret
-
 ENTRYPOINT ["/entrypoint.sh"]

@@ -10,3 +10,8 @@ services:
       - 51820:51820/udp
     cap_add:
       - NET_ADMIN
+    secrets:
+      - wgrest_auth_token
+secrets:
+  wgrest_auth_token:
+    file: wgrest_auth_token.txt
