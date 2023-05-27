@@ -2,6 +2,7 @@
 
 namespace WirescaleApi.Controllers;
 
+[ApiController]
 public class WireguardPeerController : ControllerBase
 {
 }
