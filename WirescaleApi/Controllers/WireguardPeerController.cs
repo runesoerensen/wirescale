@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using WirescaleApi.Models;
 
 namespace WirescaleApi.Controllers;
 
@@ -6,4 +8,9 @@ namespace WirescaleApi.Controllers;
 [Route("[controller]")]
 public class WireguardPeerController : ControllerBase
 {
+    [HttpPost]
+    public WireguardPeer Create([FromBody] string publicKey)
+    {
+        throw new NotImplementedException();
+    }
 }
