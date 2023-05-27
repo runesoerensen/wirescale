@@ -9,6 +9,7 @@ namespace WirescaleApi.Controllers;
 public class WireguardPeerController : ControllerBase
 {
     [HttpPost]
+    [Authorize]
     public WireguardPeer Create([FromBody] string publicKey)
     {
         throw new NotImplementedException();
