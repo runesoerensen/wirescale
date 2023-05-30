@@ -1,5 +1,4 @@
 ﻿using NetTools;
-using WirescaleApi.Models;
 
 namespace WirescaleApi;
 

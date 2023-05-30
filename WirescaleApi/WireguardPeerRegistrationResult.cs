@@ -1,4 +1,4 @@
-﻿namespace WirescaleApi.Models;
+﻿namespace WirescaleApi;
 
 public class WireguardPeerRegistrationResult
 {
