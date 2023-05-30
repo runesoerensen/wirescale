@@ -26,6 +26,7 @@ builder.Services.AddHttpClient<IWgrestApiClient, WgrestApiClient>(client =>
 });
 
 builder.Services.AddTransient<IpAddressAllocator>();
+builder.Services.AddTransient<WireguardManager>();
 
 var app = builder.Build();
 

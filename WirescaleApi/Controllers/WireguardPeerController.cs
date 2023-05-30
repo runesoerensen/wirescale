@@ -8,6 +8,13 @@ namespace WirescaleApi.Controllers;
 [Route("[controller]")]
 public class WireguardPeerController : ControllerBase
 {
+    private readonly WireguardManager _wireguardManager;
+
+    public WireguardPeerController(WireguardManager wireguardManager)
+    {
+        _wireguardManager = wireguardManager;
+    }
+
     [HttpPost]
     [Authorize]
     public async Task<WireguardPeerRegistrationResult> Create([FromBody] string publicKey)
