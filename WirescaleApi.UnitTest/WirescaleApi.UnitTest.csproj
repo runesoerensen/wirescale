@@ -22,4 +22,7 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WirescaleApi\WirescaleApi.csproj" />
+  </ItemGroup>
 </Project>
