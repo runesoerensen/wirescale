@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 PRIVATE_KEY_FILE="/etc/wireguard/private.key"
 
