@@ -19,6 +19,15 @@ public class WireguardPeerController : ControllerBase
     [Authorize]
     public async Task<ActionResult<WireguardPeerRegistrationResult>> Create([FromBody] string publicKey)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var registrationResult = await _wireguardManager.RegisterNewPeer(publicKey);
+
+            return Ok(registrationResult);
+        }
+        catch (InvalidOperationException exception)
+        {
+            return BadRequest(exception.Message);
+        }
     }
 }
