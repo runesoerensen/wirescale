@@ -1,6 +1,6 @@
 FROM debian:bullseye-slim
 
-RUN apt-get update && apt-get install -y wireguard iptables iproute2 curl systemd
+RUN apt update && apt upgrade && apt install -y wireguard iptables iproute2 curl systemd
 
 COPY wg-wirescale.conf /etc/wireguard/
 COPY entrypoint.sh /entrypoint.sh
