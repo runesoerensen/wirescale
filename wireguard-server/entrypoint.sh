@@ -37,6 +37,6 @@ trap 'cleanup' SIGTERM
 
 wgrest_auth_token=$(cat /run/secrets/wgrest_auth_token)
 # Only listen on Docker IP (e.g. don't allow access to wireguard network peers)
-wgrest --static-auth-token "$wgrest_auth_token" --listen "$(hostname -i):8000" &
+wgrest --static-auth-token "$wgrest_auth_token" --listen "$(hostname -i):8000" --device-host="127.0.0.1" &
 
 wait $!
