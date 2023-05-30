@@ -1,8 +1,8 @@
 ﻿namespace WirescaleApi.Models;
 
-public class WireguardPeer
+public class WireguardPeerRegistrationResult
 {
-	public WireguardPeer()
+	public WireguardPeerRegistrationResult()
 	{
 	}
 }
