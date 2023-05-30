@@ -1,4 +1,6 @@
-﻿namespace WirescaleApi;
+﻿using WirescaleApi.Models;
+
+namespace WirescaleApi;
 
 public class WireguardManager
 {
@@ -9,5 +11,10 @@ public class WireguardManager
     {
         _wgrestApiClient = wgrestApiClient;
         _ipAddressAllocator = ipAddressAllocator;
+    }
+
+    public async Task<WireguardPeerRegistrationResult> RegisterNewPeer(string clientPublicKey)
+    {
+        throw new NotImplementedException();
     }
 }
