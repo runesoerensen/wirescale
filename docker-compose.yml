@@ -16,6 +16,8 @@ services:
     ports:
       - 3000:80
     build: ./WirescaleApi
+    secrets:
+      - wgrest_auth_token
 secrets:
   wgrest_auth_token:
     file: wgrest_auth_token.txt

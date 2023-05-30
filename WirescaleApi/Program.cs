@@ -19,10 +19,13 @@ builder.Services.AddAuthentication(options =>
     options.Audience = builder.Configuration["Auth0:Audience"];
 });
 
+var dockerSecretsDirectory = "/run/secrets/";
+builder.Configuration.AddKeyPerFile(dockerSecretsDirectory);
+
 builder.Services.AddHttpClient<IWgrestApiClient, WgrestApiClient>(client =>
 {
     client.BaseAddress = new Uri(builder.Configuration["WgrestApi:BaseAddress"]);
-    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", builder.Configuration["WgrestApi:AuthToken"]);
+    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", builder.Configuration["wgrest_auth_token"]);
 });
 
 builder.Services.AddTransient<IpAddressAllocator>();
