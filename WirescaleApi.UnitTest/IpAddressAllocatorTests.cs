@@ -28,4 +28,14 @@ public class IpAddressAllocatorTests
 
         Assert.Equal(IPAddress.Parse(expectedIp), result);
     }
+
+    [Fact]
+    public void AllocateIpAddress_ThrowsException_WhenNoIpAddressAvailable()
+    {
+        string networkCidr = "10.0.0.1/29"; // only 6 available IPs
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+            _ipAddressAllocator.AllocateIpAddress(networkCidr, _peerIpRanges));
+
+        Assert.Equal($"No IP addresses available in {networkCidr}.", exception.Message);
+    }
 }

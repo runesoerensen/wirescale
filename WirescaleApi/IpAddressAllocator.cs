@@ -21,6 +21,6 @@ public class IpAddressAllocator
 
             return ipAddress;
         }
-        throw new NotImplementedException();
+        throw new InvalidOperationException($"No IP addresses available in {networkCidr}.");
     }
 }
