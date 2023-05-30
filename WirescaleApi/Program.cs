@@ -25,6 +25,8 @@ builder.Services.AddHttpClient<IWgrestApiClient, WgrestApiClient>(client =>
     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", builder.Configuration["WgrestApi:AuthToken"]);
 });
 
+builder.Services.AddTransient<IpAddressAllocator>();
+
 var app = builder.Build();
 
 app.UseAuthentication();
