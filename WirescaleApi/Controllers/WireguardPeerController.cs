@@ -17,7 +17,7 @@ public class WireguardPeerController : ControllerBase
 
     [HttpPost]
     [Authorize]
-    public async Task<WireguardPeerRegistrationResult> Create([FromBody] string publicKey)
+    public async Task<ActionResult<WireguardPeerRegistrationResult>> Create([FromBody] string publicKey)
     {
         throw new NotImplementedException();
     }
