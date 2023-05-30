@@ -10,7 +10,7 @@ public class WireguardPeerController : ControllerBase
 {
     [HttpPost]
     [Authorize]
-    public WireguardPeer Create([FromBody] string publicKey)
+    public async Task<WireguardPeer> Create([FromBody] string publicKey)
     {
         throw new NotImplementedException();
     }
