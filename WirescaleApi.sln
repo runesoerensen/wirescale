@@ -5,6 +5,8 @@ VisualStudioVersion = 25.0.1705.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WirescaleApi", "WirescaleApi\WirescaleApi.csproj", "{5DEF9BCF-07E6-47D5-94DD-3BDA0349B4E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WirescaleApi.UnitTest", "WirescaleApi.UnitTest\WirescaleApi.UnitTest.csproj", "{9307A917-EBC7-44C5-B4FA-BAAFF349C25E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{5DEF9BCF-07E6-47D5-94DD-3BDA0349B4E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DEF9BCF-07E6-47D5-94DD-3BDA0349B4E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DEF9BCF-07E6-47D5-94DD-3BDA0349B4E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9307A917-EBC7-44C5-B4FA-BAAFF349C25E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9307A917-EBC7-44C5-B4FA-BAAFF349C25E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9307A917-EBC7-44C5-B4FA-BAAFF349C25E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9307A917-EBC7-44C5-B4FA-BAAFF349C25E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
