@@ -1,5 +1,7 @@
 #!/bin/bash
 
+wgrest_version=1.0.0-alpha10.5
+
 install_wgrest() {
   ARCH=""
   case $(uname -m) in
@@ -14,8 +16,8 @@ install_wgrest() {
     exit 1
     ;;
   esac
-  curl -L https://github.com/suquant/wgrest/releases/latest/download/wgrest_$ARCH.deb -o wgrest_amd.deb
-  dpkg -i wgrest_amd.deb
+  curl -fssL https://github.com/suquant/wgrest/releases/download/${wgrest_version}/wgrest_$ARCH.deb -O
+  dpkg -i wgrest_$ARCH.deb
 }
 
 install_wgrest
