@@ -13,5 +13,6 @@ public class Program
         var configuration = configurationBuilder.Build();
 
         var accessTokenProvider = new AcessTokenProvider(configuration["Auth0:Domain"], configuration["Auth0:ClientId"], configuration["Auth0:RedirectUri"]);
+        var accessToken = await accessTokenProvider.GetAccessToken();
     }
 }
