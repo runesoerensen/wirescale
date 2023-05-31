@@ -19,5 +19,6 @@ public class Program
         var wireguardKeyPair = wireguardKeyPairGenerator.Generate();
 
         var wirescaleApiClient = new WirescaleApiClient(configuration["WirescaleApiBaseUri"]);
+        var wireguardPeerRegistration = await wirescaleApiClient.RegisterPublicKey(accessToken, wireguardKeyPair);
     }
 }
