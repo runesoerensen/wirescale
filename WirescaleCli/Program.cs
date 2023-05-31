@@ -25,6 +25,8 @@ public class Program
 
             var wireguardConfigurationWriter = new WireguardConfigurationWriter("wg-wirescale.conf");
             wireguardConfigurationWriter.Write(wireguardKeyPair, wireguardPeerRegistration);
+
+            Console.WriteLine("You are now logged in.");
         }
         catch (HttpRequestException exception)
         {
