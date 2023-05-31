@@ -22,6 +22,9 @@ public class Program
         try
         {
             var wireguardPeerRegistration = await wirescaleApiClient.RegisterPublicKey(accessToken, wireguardKeyPair);
+
+            var wireguardConfigurationWriter = new WireguardConfigurationWriter("wg-wirescale.conf");
+            wireguardConfigurationWriter.Write(wireguardKeyPair, wireguardPeerRegistration);
         }
         catch (HttpRequestException exception)
         {
