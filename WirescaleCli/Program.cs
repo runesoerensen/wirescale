@@ -19,6 +19,13 @@ public class Program
         var wireguardKeyPair = wireguardKeyPairGenerator.Generate();
 
         var wirescaleApiClient = new WirescaleApiClient(configuration["WirescaleApiBaseUri"]);
-        var wireguardPeerRegistration = await wirescaleApiClient.RegisterPublicKey(accessToken, wireguardKeyPair);
+        try
+        {
+            var wireguardPeerRegistration = await wirescaleApiClient.RegisterPublicKey(accessToken, wireguardKeyPair);
+        }
+        catch (HttpRequestException exception)
+        {
+            Console.WriteLine($"Failed to call the Wirescale API. Status code: {exception.StatusCode}");
+        }
     }
 }
