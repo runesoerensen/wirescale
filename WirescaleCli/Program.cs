@@ -15,6 +15,9 @@ public class Program
         var accessTokenProvider = new AcessTokenProvider(configuration["Auth0:Domain"], configuration["Auth0:ClientId"], configuration["Auth0:RedirectUri"]);
         var accessToken = await accessTokenProvider.GetAccessToken();
 
+        var wireguardKeyPairGenerator = new WireguardKeyPairGenerator();
+        var wireguardKeyPair = wireguardKeyPairGenerator.Generate();
+
         var wirescaleApiClient = new WirescaleApiClient(configuration["WirescaleApiBaseUri"]);
     }
 }
