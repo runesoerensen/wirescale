@@ -11,5 +11,7 @@ public class Program
             .AddJsonFile("appsettings.json", optional: false);
 
         var configuration = configurationBuilder.Build();
+
+        var accessTokenProvider = new AcessTokenProvider(configuration["Auth0:Domain"], configuration["Auth0:ClientId"], configuration["Auth0:RedirectUri"]);
     }
 }
