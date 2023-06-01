@@ -24,9 +24,10 @@ public class WireguardPeerController : ControllerBase
 
             return Ok(registrationResult);
         }
-        catch (InvalidOperationException exception)
+        // This is currently the only type of exception that can be caused by a client's input return HTTP 400 with error message on that.
+        catch (PeerAlreadyRegisteredException)
         {
-            return BadRequest(exception.Message);
+            return BadRequest("Public key is already registered as a peer");
         }
     }
 }

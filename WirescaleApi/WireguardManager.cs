@@ -40,7 +40,7 @@ public class WireguardManager
         var wireguardPeers = await _wgrestApiClient.GetWgrestPeers(wirescaleDevice.Name);
         if (wireguardPeers.Any(x => x.PublicKey == clientPublicKey))
         {
-            throw new InvalidOperationException("Public key is already registered as a peer");
+            throw new PeerAlreadyRegisteredException();
         }
 
         // We currently only support one (IPv4) network. Throw an exception if device has more or less than that.

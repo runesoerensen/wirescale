@@ -106,6 +106,6 @@ public class WireguardManagerTests
             .Setup(x => x.GetWgrestPeers(It.IsAny<string>()))
             .ReturnsAsync(wgrestPeers);
 
-        await Assert.ThrowsAsync<InvalidOperationException>(() => _wireguardManager.RegisterNewPeer(_testClientPublicKey));
+        await Assert.ThrowsAsync<PeerAlreadyRegisteredException>(() => _wireguardManager.RegisterNewPeer(_testClientPublicKey));
     }
 }
