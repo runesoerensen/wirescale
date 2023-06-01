@@ -31,5 +31,12 @@ public class WireguardPeerController : ControllerBase
         {
             return BadRequest("Public key is already registered as a peer");
         }
+        // Log all other exceptions and return HTTP 500
+        catch (Exception exception)
+        {
+            _logger.LogError(exception, exception.Message);
+
+            return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error");
+        }
     }
 }
