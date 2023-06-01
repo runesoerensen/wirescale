@@ -6,6 +6,7 @@ using System.Web;
 using Auth0.AuthenticationApi;
 using Auth0.AuthenticationApi.Builders;
 using Auth0.AuthenticationApi.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace WirescaleCli;
 
@@ -102,7 +103,7 @@ public class AcessTokenProvider
             var bytes = new byte[CodeVerifierLength];
             randomNumberGenerator.GetBytes(bytes);
 
-            return Base64UrlEncode(bytes);
+            return Base64UrlEncoder.Encode(bytes);
         }
     }
 
@@ -112,14 +113,7 @@ public class AcessTokenProvider
         {
             byte[] challengeBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(codeVerifier));
 
-            return Base64UrlEncode(challengeBytes);
+            return Base64UrlEncoder.Encode(challengeBytes);
         }
-    }
-
-    private static string Base64UrlEncode(byte[] data)
-    {
-        var base64 = Convert.ToBase64String(data);
-
-        return base64.Replace("+", "-").Replace("/", "_").Replace("=", "");
     }
 }
