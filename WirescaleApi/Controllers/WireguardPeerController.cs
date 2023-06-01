@@ -7,10 +7,12 @@ namespace WirescaleApi.Controllers;
 [Route("[controller]")]
 public class WireguardPeerController : ControllerBase
 {
+    private readonly ILogger<WireguardPeerController> _logger;
     private readonly WireguardManager _wireguardManager;
 
-    public WireguardPeerController(WireguardManager wireguardManager)
+    public WireguardPeerController(ILogger<WireguardPeerController> logger, WireguardManager wireguardManager)
     {
+        _logger = logger;
         _wireguardManager = wireguardManager;
     }
 
