@@ -19,6 +19,11 @@ public class WireguardManager
         var wireguardDevices = await _wgrestApiClient.GetWgrestDevices();
         var wirescaleDevice = wireguardDevices.Single(x => x.Name == deviceName);
 
+        return await RegisterDevicePeer(wirescaleDevice, clientPublicKey);
+    }
+
+    private async Task<WireguardPeerRegistrationResult> RegisterDevicePeer(WgrestDevice wirescaleDevice, string clientPublicKey)
+    {
         var wireguardPeers = await _wgrestApiClient.GetWgrestPeers(wirescaleDevice.Name);
         if (wireguardPeers.Any(x => x.PublicKey == clientPublicKey))
         {
