@@ -4,6 +4,8 @@ namespace WirescaleApi;
 
 public class WireguardManager
 {
+    private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
+
     private readonly IWgrestApiClient _wgrestApiClient;
     private readonly IpAddressAllocator _ipAddressAllocator;
 
@@ -19,7 +21,18 @@ public class WireguardManager
         var wireguardDevices = await _wgrestApiClient.GetWgrestDevices();
         var wirescaleDevice = wireguardDevices.Single(x => x.Name == deviceName);
 
-        return await RegisterDevicePeer(wirescaleDevice, clientPublicKey);
+        try
+        {
+            // Make sure multiple instances of WireGuardManager synchronizes access to peer registration
+            // to avoid allocating the same allowed-ips to more than one peer.
+            await _semaphore.WaitAsync();
+
+            return await RegisterDevicePeer(wirescaleDevice, clientPublicKey);
+        }
+        finally
+        {
+            _semaphore.Release();
+        }
     }
 
     private async Task<WireguardPeerRegistrationResult> RegisterDevicePeer(WgrestDevice wirescaleDevice, string clientPublicKey)
