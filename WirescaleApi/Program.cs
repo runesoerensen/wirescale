@@ -7,6 +7,10 @@ using WirescaleApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add a simple console logger for logging to stdout.
+builder.Logging.ClearProviders();
+builder.Logging.AddSimpleConsole();
+
 builder.Services.AddControllers();
 
 builder.Services.AddAuthentication(options =>
