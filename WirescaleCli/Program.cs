@@ -24,9 +24,7 @@ public class Program
         }
         catch (AuthorizationRequestException exception)
         {
-            Console.Error.WriteLine(exception.Message);
-
-            Environment.Exit(1);
+            WriteErrorAndExit(exception.Message);
             return;
         }
 
@@ -70,5 +68,12 @@ public class Program
         {
             Console.Error.WriteLine(exception.Message);
         }
+    }
+
+    private static void WriteErrorAndExit(string message)
+    {
+        Console.Error.WriteLine(message);
+
+        Environment.Exit(1);
     }
 }
