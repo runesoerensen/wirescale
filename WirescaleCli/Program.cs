@@ -13,7 +13,19 @@ public class Program
         var configuration = configurationBuilder.Build();
 
         var accessTokenProvider = new AcessTokenProvider(configuration["Auth0:Domain"], configuration["Auth0:ClientId"], configuration["Auth0:RedirectUri"]);
-        var accessToken = await accessTokenProvider.GetAccessToken();
+
+        string accessToken;
+        try
+        {
+            accessToken = await accessTokenProvider.GetAccessToken();
+        }
+        catch (AuthorizationRequestException exception)
+        {
+            Console.Error.WriteLine(exception.Message);
+
+            Environment.Exit(1);
+            return;
+        }
 
         var wireguardKeyPairGenerator = new WireguardKeyPairGenerator();
         var wireguardKeyPair = wireguardKeyPairGenerator.Generate();
