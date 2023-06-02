@@ -60,23 +60,52 @@ public class AcessTokenProvider
         OpenBrowser(authorizationUrlBuilder.Build());
 
         var context = await callbackHttpListener.GetContextAsync();
-        var callbackRequest = context.Request;
+        var callbackListenerRequest = context.Request;
 
+        string response = string.Empty;
 
-        var authorizationCode = HttpUtility.ParseQueryString(callbackRequest.Url.Query)["code"];
+        var parsedQueryString = HttpUtility.ParseQueryString(callbackListenerRequest.Url.Query);
+        try
+        {
+            var errorCode = parsedQueryString["error"];
+            if (!string.IsNullOrEmpty(errorCode))
+            {
+                // Return an appropriate response based on the error code (possible codes are described here: https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.2.1
+                response = GetErrorResponse(errorCode);
 
-        var response = context.Response;
-        var responseString = "<html><body><p>Authorization code received successfully. You can now close this window.</p></body></html>";
-        var buffer = Encoding.UTF8.GetBytes(responseString);
+                throw new AuthorizationRequestException(response);
+            }
+            response = "Authorization code was received successfully";
 
-        response.ContentLength64 = buffer.Length;
-        var responseOutput = response.OutputStream;
-        await responseOutput.WriteAsync(buffer, 0, buffer.Length);
-        responseOutput.Close();
+            return parsedQueryString["code"];
 
-        callbackHttpListener.Stop();
+        }
+        // Make sure a response is returned to the user and the http listener is stopped
+        finally
+        {
+            var httpListenerResponse = context.Response;
+            var responseString = $"<html><body><p>{response}.<br /><br /> You can now close this window.</p></body></html>";
 
-        return authorizationCode;
+            var buffer = Encoding.UTF8.GetBytes(responseString);
+            httpListenerResponse.ContentLength64 = buffer.Length;
+            var responseOutput = httpListenerResponse.OutputStream;
+            await responseOutput.WriteAsync(buffer, 0, buffer.Length);
+            responseOutput.Close();
+
+            callbackHttpListener.Stop();
+        }
+    }
+
+    private static string GetErrorResponse(string? errorCode)
+    {
+        return errorCode switch
+        {
+            "access_denied" => "The authorization request was denied. Please try logging in again, and make sure to approve the authorization request when prompted",
+            "temporarily_unavailable" => "The authorization server is currently unable to handle the request. Please try again later",
+            "server_error" => "The authorization server encountered an unexpected condition that prevented it from fulfilling the request. Please try again later",
+            // The remaining error types should not be encountered by the end user
+            _ => $"An unexpected error occurred during the authorization request: {errorCode}. You may file a bug report with a copy of this error message",
+        };
     }
 
     private static void OpenBrowser(Uri uri)
