@@ -14,10 +14,11 @@ public class Program
 
         var accessTokenProvider = new AcessTokenProvider(configuration["Auth0:Domain"], configuration["Auth0:ClientId"], configuration["Auth0:RedirectUri"]);
 
+        var wirescaleApiBaseUri = configuration["WirescaleApiBaseUri"];
         string accessToken;
         try
         {
-            accessToken = await accessTokenProvider.GetAccessToken();
+            accessToken = await accessTokenProvider.GetAccessToken(wirescaleApiBaseUri);
         }
         catch (AuthorizationRequestException exception)
         {
@@ -30,7 +31,7 @@ public class Program
         var wireguardKeyPairGenerator = new WireguardKeyPairGenerator();
         var wireguardKeyPair = wireguardKeyPairGenerator.Generate();
 
-        var wirescaleApiClient = new WirescaleApiClient(configuration["WirescaleApiBaseUri"]);
+        var wirescaleApiClient = new WirescaleApiClient(wirescaleApiBaseUri);
         try
         {
             var wireguardPeerRegistration = await wirescaleApiClient.RegisterPublicKey(accessToken, wireguardKeyPair);

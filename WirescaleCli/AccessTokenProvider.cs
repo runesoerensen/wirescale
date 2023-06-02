@@ -23,13 +23,13 @@ public class AcessTokenProvider
         _auth0RedirectUri = auth0RedirectUri;
     }
 
-    public async Task<string> GetAccessToken()
+    public async Task<string> GetAccessToken(string audience)
     {
         var codeVerifier = GenerateCodeVerifier();
         var codeChallenge = GenerateCodeChallenge(codeVerifier);
 
         var authorizationUrlBuilder = _authenticationApiClient.BuildAuthorizationUrl()
-            .WithAudience("http://localhost:3000")
+            .WithAudience(audience)
             .WithClient(_auth0ClientId)
             .WithResponseType(AuthorizationResponseType.Code)
             .WithRedirectUrl(_auth0RedirectUri)
