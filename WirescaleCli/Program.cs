@@ -66,5 +66,9 @@ public class Program
                 throw;
             }
         }
+        catch (WireguardCommandException exception)
+        {
+            Console.Error.WriteLine(exception.Message);
+        }
     }
 }
