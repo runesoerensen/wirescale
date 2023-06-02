@@ -45,19 +45,19 @@ public class Program
         {
             if (exception.InnerException is SocketException)
             {
-                Console.Error.WriteLine($"Could not connect to the Wirescale API server. Error: {exception.Message}");
+                WriteErrorAndExit($"Could not connect to the Wirescale API server. Error: {exception.Message}");
             }
             else if (exception.StatusCode == HttpStatusCode.Unauthorized)
             {
-                Console.Error.WriteLine("Your WireGuard public key could not be registered with the Wirescale API due to an authorization issue. Please try logging in again.");
+                WriteErrorAndExit("Your WireGuard public key could not be registered with the Wirescale API due to an authorization issue. Please try logging in again.");
             }
             else if (exception.StatusCode == HttpStatusCode.BadRequest)
             {
-                Console.Error.WriteLine($"The Wirescale API returned an HTTP 400 with the message: {exception.Message}");
+                WriteErrorAndExit($"The Wirescale API returned an HTTP 400 with the message: {exception.Message}");
             }
             else if (exception.StatusCode == HttpStatusCode.InternalServerError)
             {
-                Console.Error.WriteLine("The Wirescale API was unable to process your request due to an internal server error. The error has been logged and you may file a bug report if this issue is not resolved shortly");
+                WriteErrorAndExit("The Wirescale API was unable to process your request due to an internal server error. The error has been logged and you may file a bug report if this issue is not resolved shortly");
             }
             else
             {
@@ -66,7 +66,7 @@ public class Program
         }
         catch (WireguardCommandException exception)
         {
-            Console.Error.WriteLine(exception.Message);
+            WriteErrorAndExit(exception.Message);
         }
     }
 
