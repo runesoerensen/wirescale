@@ -41,6 +41,7 @@ public class Program
 
             Console.WriteLine("You are now logged in.");
         }
+        // Figure out a better place to put this logic.
         catch (HttpRequestException exception)
         {
             if (exception.InnerException is SocketException)
