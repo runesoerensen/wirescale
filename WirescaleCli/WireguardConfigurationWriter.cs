@@ -42,7 +42,8 @@ public class WireguardConfigurationWriter
         process.WaitForExit();
         if (process.ExitCode != 0)
         {
-            throw new Exception("Failed to configure WireGuard.");
+            // The command `wirescale logout` is not yet implemented, so provide an alternative solution for early adopters of Wirescale
+            throw new WireguardCommandException($"Failed to configure Wireguard interface. Try logging out (`wirescale logout`), or manually remove the interface using `wg-quick down {_configurationFilePath}`");
         }
     }
 }
