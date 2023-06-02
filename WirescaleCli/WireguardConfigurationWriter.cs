@@ -7,9 +7,10 @@ public class WireguardConfigurationWriter
 {
     private readonly string _configurationFilePath;
 
-    public WireguardConfigurationWriter(string configurationFilePath)
+    public WireguardConfigurationWriter(string configurationFileName)
     {
-        _configurationFilePath = configurationFilePath;
+        //Should move this to a different directory (e.g. the distro-specific wg folder, `~/.wirescale` or similar.
+        _configurationFilePath = Path.Combine(Directory.GetCurrentDirectory(), configurationFileName);
     }
 
     public void Write(WireguardKeyPair wireguardKeyPair, WirescalePeerRegistration peerRegistration)
@@ -33,7 +34,7 @@ public class WireguardConfigurationWriter
         var process = Process.Start(new ProcessStartInfo
         {
             FileName = "wg-quick",
-            Arguments = $"up ./{_configurationFilePath}",
+            Arguments = $"up {_configurationFilePath}",
             UseShellExecute = false,
             CreateNoWindow = true,
         });
